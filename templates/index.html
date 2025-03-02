@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PlantDoctor - Detect Plant Diseases</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Navigation -->
+        <nav class="navbar">
+            <div class="navbar-container">
+                <div class="logo">
+                    <i class="fas fa-lemon logo-icon"></i>
+                    <span class="logo-text">PlantDoctor</span>
+                </div>
+
+                <!-- Desktop menu -->
+                <div class="desktop-menu">
+                    <a href="{{ url_for('login_page') }}" class="login-btn">
+                        <i class="fas fa-sign-in-alt"></i> Login
+                    </a>
+                    <a href="{{ url_for('register_page') }}" class="signup-btn">
+                        <i class="fas fa-user-plus"></i> Sign Up
+                    </a>
+                </div>
+
+                <!-- Mobile menu button -->
+                <div class="mobile-menu-btn" onclick="toggleMobileMenu()">
+                    <i class="fas fa-bars" id="menu-icon"></i>
+                    <i class="fas fa-times" id="close-icon" style="display: none;"></i>
+                </div>
+            </div>
+
+            <!-- Mobile menu -->
+            <div class="mobile-menu" id="mobile-menu">
+                <a href="{{ url_for('login_page') }}" class="login-btn-mobile">
+                    <i class="fas fa-sign-in-alt"></i> Login
+                </a>
+                <a href="{{ url_for('register_page') }}" class="signup-btn-mobile">
+                    <i class="fas fa-user-plus"></i> Sign Up
+                </a>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Landing Page -->
+            <div class="landing-page">
+                <div class="landing-content">
+                    <h1 class="landing-title">Detect Plant Diseases Instantly</h1>
+                    <p class="landing-subtitle">Upload a photo or use your camera to identify diseases and get treatment recommendations.</p>
+
+                    <div class="cta-buttons">
+                        <a href="{{ url_for('login_page') }}" class="primary-btn">
+                            <i class="fas fa-sign-in-alt"></i> Login to Get Started
+                        </a>
+                        <a href="{{ url_for('register_page') }}" class="secondary-btn">
+                            <i class="fas fa-user-plus"></i> Create an Account
+                        </a>
+                    </div>
+
+                    <div class="features">
+                        <div class="feature-card">
+                            <div class="feature-icon-container">
+                                <img src="https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?ixlib=rb-4.0.3&auto=format&fit=crop&w=774&q=80"
+                                    alt="Upload" class="feature-icon">
+                            </div>
+                            <h3 class="feature-title">Upload Photo</h3>
+                            <p class="feature-description">Upload an image of your plant's leaf to detect diseases quickly.</p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon-container">
+                                <img src="https://images.unsplash.com/photo-1575936123452-b67c3203c357?ixlib=rb-4.0.3&auto=format&fit=crop&w=1170&q=80"
+                                    alt="Camera" class="feature-icon">
+                            </div>
+                            <h3 class="feature-title">Use Camera</h3>
+                            <p class="feature-description">Take a photo directly with your device camera for instant analysis.</p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon-container">
+                                <img src="https://images.unsplash.com/photo-1490772888775-55fceea286b8?ixlib=rb-4.0.3&auto=format&fit=crop&w=1170&q=80"
+                                    alt="Solution" class="feature-icon">
+                            </div>
+                            <h3 class="feature-title">Get Solutions</h3>
+                            <p class="feature-description">Receive detailed treatment recommendations for identified diseases.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-container">
+                <div class="footer-logo">
+                    <i class="fas fa-lemon logo-icon"></i>
+                    <span class="logo-text">PlantDoctor</span>
+                </div>
+                <p class="copyright">© 2025 PlantDoctor. All rights reserved.</p>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        function toggleMobileMenu() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            const menuIcon = document.getElementById('menu-icon');
+            const closeIcon = document.getElementById('close-icon');
+
+            if (mobileMenu.style.maxHeight) {
+                mobileMenu.style.maxHeight = null;
+                menuIcon.style.display = 'block';
+                closeIcon.style.display = 'none';
+            } else {
+                mobileMenu.style.maxHeight = mobileMenu.scrollHeight + 'px';
+                menuIcon.style.display = 'none';
+                closeIcon.style.display = 'block';
+            }
+        }
+    </script>
+
+</body>
+</html>

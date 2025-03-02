@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plant Disease Detection</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to bottom, #e3f2e9, #cde6d6);
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 50px;
+            background: white;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .navbar .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #256029;
+            display: flex;
+            align-items: center;
+        }
+        .navbar .logo i {
+            margin-right: 8px;
+            color: #2a7b38;
+        }
+        .navbar .nav-links a {
+            text-decoration: none;
+            color: #256029;
+            font-weight: bold;
+            margin-left: 15px;
+            padding: 8px 12px;
+            border-radius: 5px;
+        }
+        .navbar .nav-links a:hover {
+            background: #2a7b38;
+            color: white;
+        }
+        .container {
+            margin-top: 50px;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        h2 {
+            color: #256029;
+        }
+        p {
+            color: #555;
+        }
+        .options {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .option-box {
+            background: #f5faf7;
+            padding: 15px;
+            border-radius: 10px;
+            width: 45%;
+            text-align: center;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .option-box:hover {
+            background: #e0f2e9;
+        }
+        .option-box i {
+            font-size: 30px;
+            color: #2a7b38;
+        }
+        .option-box span {
+            display: block;
+            font-weight: bold;
+            margin-top: 8px;
+        }
+        input[type="file"] {
+            display: none;
+        }
+        #video, #captured-image {
+            display: none;
+            width: 100%;
+            max-width: 400px;
+            margin: 15px auto;
+            border-radius: 10px;
+        }
+        .btn {
+            background-color: #2a7b38;
+            color: white;
+            border: none;
+            padding: 12px 18px;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 16px;
+            display: block;
+            width: 100%;
+            margin-top: 15px;
+        }
+        .btn:hover {
+            background-color: #256029;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <div class="navbar">
+        <div class="logo">
+            <i class="fas fa-seedling"></i> PlantDoctor
+        </div>
+        <div class="nav-links">
+            <a href="#">Login</a>
+            <a href="#" style="background: #2a7b38; color: white;">Sign Up</a>
+        </div>
+    </div>
+
+    <div class="container">
+        <h2>Detect Plant Diseases Instantly</h2>
+        <p>Upload a photo or use your camera to identify diseases.</p>
+
+        <form id="upload-form" action="{{ url_for('disease_prediction') }}" method="POST" enctype="multipart/form-data">
+        <!-- Image Preview -->
+        <img id="captured-image" src="" alt="Preview Image">
+        
+        <!-- Upload & Camera Buttons -->
+        <div class="options">
+            <label class="option-box">
+                <i class="fas fa-upload"></i>
+                <span>Upload Photo</span>
+                <input type="file" id="file-upload" name="file" accept="image/*" onchange="previewImage(event)">
+            </label>
+            <div class="option-box" onclick="openCamera()">
+                <i class="fas fa-camera"></i>
+                <span>Use Camera</span>
+            </div>
+        </div>
+
+        <!-- Camera Capture -->
+        <video id="video" autoplay></video>
+        <button class="btn" id="capture-btn" style="display:none;" onclick="captureImage()">Capture Photo</button>
+
+        <!-- Hidden Input for Captured Image -->
+        <input type="hidden" name="camera-image" id="camera-image">
+        
+        <!-- Submit Button -->
+        
+            <button type="submit" class="btn">Predict Disease</button>
+        </form>
+    </div>
+
+    <script>
+        function previewImage(event) {
+            var fileInput = document.getElementById('file-upload');
+            var imagePreview = document.getElementById('captured-image');
+
+            if (fileInput.files.length > 0) {
+                var file = fileInput.files[0];
+
+                // Display selected image
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    imagePreview.src = e.target.result;
+                    imagePreview.style.display = "block";
+                };
+                reader.readAsDataURL(file);
+            } else {
+                imagePreview.style.display = "none";
+            }
+        }
+
+        function openCamera() {
+            const video = document.getElementById('video');
+            const captureBtn = document.getElementById('capture-btn');
+
+            video.style.display = "block";
+            captureBtn.style.display = "inline-block";
+
+            navigator.mediaDevices.getUserMedia({ video: true })
+                .then(function (stream) {
+                    video.srcObject = stream;
+                })
+                .catch(function (err) {
+                    alert("Error accessing camera: " + err);
+                });
+        }
+
+        function captureImage() {
+    const video = document.getElementById('video');
+    const canvas = document.createElement('canvas');
+    const context = canvas.getContext('2d');
+    const imagePreview = document.getElementById('captured-image');
+
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+    context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+    // Compress and convert to Data URL with lower quality
+    const imageDataURL = canvas.toDataURL('image/jpeg', 0.5); // Reduce quality to 50%
+    document.getElementById('camera-image').value = imageDataURL;
+
+    // Show captured image preview
+    imagePreview.src = imageDataURL;
+    imagePreview.style.display = "block";
+
+    // Stop camera stream
+    const stream = video.srcObject;
+    stream.getTracks().forEach(track => track.stop());
+
+    // Hide video & capture button
+    video.style.display = "none";
+    document.getElementById('capture-btn').style.display = "none";
+}
+
+    </script>
+
+</body>
+</html>
+{% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        <div class="alert-container">
+            {% for category, message in messages %}
+                <div class="alert {{ category }}">{{ message }}</div>
+            {% endfor %}
+        </div>
+    {% endif %}
+{% endwith %}
+
+<style>
+    .alert-container {
+        max-width: 500px;
+        margin: auto;
+        margin-bottom: 10px;
+    }
+    .alert {
+        padding: 10px;
+        color: white;
+        text-align: center;
+        border-radius: 5px;
+    }
+    .error {
+        background-color: #d9534f;
+    }
+</style>

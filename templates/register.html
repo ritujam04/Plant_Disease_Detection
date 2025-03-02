@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register | PlantDoctor</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to bottom, #e3f2e9, #cde6d6);
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 50px;
+            background: white;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .navbar .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #256029;
+            display: flex;
+            align-items: center;
+        }
+        .navbar .logo i {
+            margin-right: 8px;
+            color: #2a7b38;
+        }
+        .navbar .nav-links a {
+            text-decoration: none;
+            color: #256029;
+            font-weight: bold;
+            margin-left: 15px;
+            padding: 8px 12px;
+            border-radius: 5px;
+        }
+        .navbar .nav-links a:hover {
+            background: #2a7b38;
+            color: white;
+        }
+        .form-container {
+            margin-top: 60px;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: left;
+        }
+        h2 {
+            text-align: center;
+            color: #256029;
+            margin-bottom: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        .btn {
+            display: block;
+            width: 100%;
+            background-color: #2a7b38;
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            text-align: center;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        .btn:hover {
+            background-color: #256029;
+        }
+        .form-container p {
+            text-align: center;
+            margin-top: 10px;
+            color: #555;
+        }
+        .form-container a {
+            text-decoration: none;
+            color: #2a7b38;
+            font-weight: bold;
+        }
+        .form-container a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <div class="navbar">
+        <div class="logo">
+            <i class="fas fa-seedling"></i> PlantDoctor
+        </div>
+        <div class="nav-links">
+            <a href="{{ url_for('login_page') }}">Login</a>
+            <a href="{{ url_for('register_page') }}" style="background: #2a7b38; color: white;">Sign Up</a>
+        </div>
+    </div>
+
+    <div class="form-container">
+        <h2>Create an Account</h2>
+        <form action="{{ url_for('register') }}" method="POST">
+            <div class="form-group">
+                <label for="name">Full Name</label>
+                <input type="text" name="name" id="name" placeholder="Enter your full name" required>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" name="email" id="email" placeholder="Enter your email" required>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" name="password" id="password" placeholder="Enter your password" required>
+            </div>
+
+            <button type="submit" class="btn">Register</button>
+        </form>
+        <p>Already have an account? <a href="{{ url_for('login_page') }}">Login here</a></p>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Disease Prediction Result</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to bottom, #e3f2e9, #cde6d6);
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 50px;
+            background: white;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .navbar .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #256029;
+            display: flex;
+            align-items: center;
+        }
+        .navbar .logo i {
+            margin-right: 8px;
+            color: #2a7b38;
+        }
+        .navbar .nav-links a {
+            text-decoration: none;
+            color: #256029;
+            font-weight: bold;
+            margin-left: 15px;
+            padding: 8px 12px;
+            border-radius: 5px;
+        }
+        .navbar .nav-links a:hover {
+            background: #2a7b38;
+            color: white;
+        }
+        .container {
+            margin-top: 50px;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: center;
+        }
+        h2 {
+            color: #256029;
+            margin-bottom: 15px;
+        }
+        .result {
+            font-size: 20px;
+            font-weight: bold;
+            color: #d9534f;
+            margin-bottom: 15px;
+        }
+        .icon {
+            font-size: 50px;
+            color: #d9534f;
+            margin-bottom: 10px;
+        }
+        .solution {
+            background: #f5faf7;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: left;
+            color: #333;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        .solution-title {
+            font-weight: bold;
+            color: #2a7b38;
+            margin-bottom: 5px;
+        }
+        .btn {
+            display: inline-block;
+            background-color: #2a7b38;
+            color: white;
+            padding: 12px 18px;
+            border-radius: 5px;
+            font-size: 16px;
+            margin-top: 20px;
+            text-decoration: none;
+        }
+        .btn:hover {
+            background-color: #256029;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <div class="navbar">
+        <div class="logo">
+            <i class="fas fa-seedling"></i> PlantDoctor
+        </div>
+        <div class="nav-links">
+            <a href="#">Login</a>
+            <a href="#" style="background: #2a7b38; color: white;">Sign Up</a>
+        </div>
+    </div>
+
+    <div class="container">
+        <i class="fas fa-exclamation-triangle icon"></i>
+        <h2>Plant Disease Detected</h2>
+        <p class="result"><strong>Disease Identified:</strong> {{ prediction }}</p>
+
+       
+
+        <a href="{{ url_for('disease_prediction') }}" class="btn">Upload Another Image</a>
+    </div>
+
+</body>
+</html>
